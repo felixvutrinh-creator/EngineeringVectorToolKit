@@ -20,9 +20,9 @@ y = x2, y2
 M = M1, M2
 # Spiegelung eines Punktes an einem Mittelpunkt
 if y[0] is None and y[1] is None and M is not None and x is not None:
-    y = (x[0]-2*(M[0]-x[0]), x[1]-2*(M[1]-x[1]))
+    y = (x[0]+2*(M[0]-x[0]), x[1]+2*(M[1]-x[1]))
 elif x[0] is None and x[1] is None and M is not None and y is not None:
-    x = (y[0]-2*(M[0]-y[0]), y[1]-2*(M[1]-y[1]))
+    x = (y[0]+2*(M[0]-y[0]), y[1]+2*(M[1]-y[1]))
 # Betrag des Vektors berechnen
 def betrag1(x1, y1):
     return (x1**2 + y1**2)**0.5
@@ -64,11 +64,21 @@ def WinkelZwischenVektoren(x1,y1,x2,y2):
     winkel = degrees(acos(cosa))
     return winkel
 
-# Plotten der Vektoren
 import matplotlib.pyplot as plt
+# Plotten der Spiegelung eines Punktes an einem Mittelpunkt
+if M[0] is not None and x[0]is not None and x[1] is not None and y[1] is None and y[0] is None:
+    y_spiegel = (x[0]+2*(M[0]-x[0]), x[1]+2*(M[1]-x[1]))
+    plt.quiver(0, 0, y_spiegel[0], y_spiegel[1], angles='xy', scale_units='xy', scale=1)
+elif M[1] is not None and y[0]is not None and y[1] is not None and x[0]is None and x[1] is None:
+    x_spiegel = (y[0]+2*(M[0]-y[0]), y[1]+2*(M[1]-y[1]))
+    plt.quiver(0, 0, x_spiegel[0], x_spiegel[1], angles='xy', scale_units='xy', scale=1)
+# Plotten der Vektoren
 
-plt.quiver(0, 0, x1, y1, angles='xy',scale_units='xy', scale=1)
-plt.quiver(0, 0, x2, y2, angles='xy', scale_units='xy', scale=1)
+if x[0] is not None and x[1] is not None:
+    plt.quiver(0, 0, x[0], x[1], angles='xy',scale_units='xy', scale=1)
+if y[0] is not None and y[1] is not None:    
+    plt.quiver(0, 0, y[0], y[1], angles='xy', scale_units='xy', scale=1)
+
 # Plotten des Verbindungsvektors    
 plt.quiver(x[0], x[1], verbindung[0], verbindung[1], angles='xy', scale_units='xy', scale=1, color='r')
 # Plotten des Mittelpunkts
