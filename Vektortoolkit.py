@@ -69,6 +69,11 @@ import matplotlib.pyplot as plt
 
 plt.quiver(0, 0, x1, y1, angles='xy',scale_units='xy', scale=1)
 plt.quiver(0, 0, x2, y2, angles='xy', scale_units='xy', scale=1)
+# Plotten des Verbindungsvektors    
+plt.quiver(x[0], x[1], verbindung[0], verbindung[1], angles='xy', scale_units='xy', scale=1, color='r')
+# Plotten des Mittelpunkts
+mittelpunkt = MittelpunktVektor(x[0],x[1],y[0],y[1],x)
+plt.scatter(mittelpunkt[0], mittelpunkt[1])
 plt.xlim(-10, 10)
 plt.ylim(-10, 10)
 plt.axhline(0)
