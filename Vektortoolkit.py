@@ -42,7 +42,7 @@ def Verbindungsvektor(x1,y1,x2,y2):
     return (x2 - x1, y2 - y1)
 verbindung = Verbindungsvektor(x[0],x[1],y[0],y[1])
 # Mittelpunkt eines Vektors
-def MittelpunktVektor(x1,y1,x2,y2,x=None,y=None):
+def MittelpunktVektor(x1,y1,x2,y2,x=None):
     if x is not None:
         verbindung = Verbindungsvektor(x1, y1, x2, y2)
         mittelpunkt1 = x1+ 0.5*(verbindung [0])
@@ -63,6 +63,18 @@ def WinkelZwischenVektoren(x1,y1,x2,y2):
     cosa= skalarproduktoben / (betragunten1 * betragunten2)
     winkel = degrees(acos(cosa))
     return winkel
+
+# Plotten der Vektoren
+import matplotlib.pyplot as plt
+
+plt.quiver(0, 0, x1, y1, angles='xy',scale_units='xy', scale=1)
+plt.quiver(0, 0, x2, y2, angles='xy', scale_units='xy', scale=1)
+plt.xlim(-10, 10)
+plt.ylim(-10, 10)
+plt.axhline(0)
+plt.axvline(0)
+plt.grid()
+plt.show()
 
 print("Punkt 1:", x)
 print("Punkt 2:", y)
