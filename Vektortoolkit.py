@@ -14,10 +14,13 @@ x2 = _parse_float(input("x2: ",))
 y2 = _parse_float(input("y2: ",))
 M1 = _parse_float(input("M1 (falls gegeben): ",))
 M2 = _parse_float(input("M2 (falls gegeben): ",))
+Fa1 = _parse_float(input("Kraft am Knoten 1: ",))
+Fa2 = _parse_float(input("Kraft am Knoten 2: ",))
 
 x = x1, y1
 y = x2, y2
 M = M1, M2
+Fa = Fa1, Fa2
 # Spiegelung eines Punktes an einem Mittelpunkt
 if y[0] is None and y[1] is None and M is not None and x is not None:
     y = (x[0]+2*(M[0]-x[0]), x[1]+2*(M[1]-x[1]))
@@ -63,8 +66,18 @@ def WinkelZwischenVektoren(x1,y1,x2,y2):
     cosa= skalarproduktoben / (betragunten1 * betragunten2)
     winkel = degrees(acos(cosa))
     return winkel
+# Zug / Druck der Vektoren berechnen
 
+def ZugDruck(x1,x2,y1,y2,Fa1,Fa2):
+    betragverbindung = (((verbindung[0])**2)+((verbindung[1])**2))**0.5
+    RiVe1 = verbindung[0] / betragverbindung
+    RiVe2 = verbindung[1] / betragverbindung
+    RiVe = (RiVe1, RiVe2)
+    Dot = Fa1 * RiVe[0] + Fa2 * RiVe[1]
+    return Dot
+    
 import matplotlib.pyplot as plt
+
 # Plotten der Spiegelung eines Punktes an einem Mittelpunkt
 if M[0] is not None and x[0]is not None and x[1] is not None and y[1] is None and y[0] is None:
     y_spiegel = (x[0]+2*(M[0]-x[0]), x[1]+2*(M[1]-x[1]))
@@ -84,6 +97,10 @@ plt.quiver(x[0], x[1], verbindung[0], verbindung[1], angles='xy', scale_units='x
 # Plotten des Mittelpunkts
 mittelpunkt = MittelpunktVektor(x[0],x[1],y[0],y[1],x)
 plt.scatter(mittelpunkt[0], mittelpunkt[1])
+
+
+    
+
 plt.xlim(-10, 10)
 plt.ylim(-10, 10)
 plt.axhline(0)
@@ -101,3 +118,11 @@ print("Skalarprodukt der Vektoren:", Skalarprodukt(x[0],y[0],x[1],y[1]))
 print("Verbindungsvektor XY:", Verbindungsvektor(x[0],x[1],y[0],y[1]))
 print("Mittelpunkt des Vektors:", MittelpunktVektor(x[0],x[1],y[0],y[1],x))
 print("Winkel zwischen den Vektoren:", WinkelZwischenVektoren(x[0],x[1],y[0],y[1])) 
+dot = ZugDruck(x1,x2,y1,y2,Fa1,Fa2)
+if dot > 0:
+    print("Es herrscht am Stab eine Zugkraft")
+elif dot(x1,x2,y1,y2,Fa1,Fa2) < 0:
+    print("Es herrscht am Stab eine Druckkraft")
+else:
+    print("Keine Stabkraft")  
+print("Kraft am Stab:", ZugDruck(x[0],x[1],y[0],y[1],Fa[0],Fa[1]))  
